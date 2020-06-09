@@ -1,1 +1,0 @@
-# Asterisk-Shopping
