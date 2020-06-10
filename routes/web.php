@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $articles = App\Article::inRandomOrder()->take(6)->get();
+        return view('welcome')->with('articles',$articles);
+})->name('welcome');
+Route::resource('/articles','ArticleController');
+Route::resource('/clients','ClientController');
+Route::resource('/commandes','CommandeController');
+Route::resource('/lignes','LigneController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
