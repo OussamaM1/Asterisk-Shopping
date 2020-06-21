@@ -1,3 +1,13 @@
+@inject('ligneController', 'App\Http\Controllers\LigneController')
+@php
+$cookie_name = "commande";
+$cookie_value = "[]";
+if(!isset($_COOKIE['commande']))
+{
+  setcookie($cookie_name, $cookie_value, time() + (86400 * 30),'/'); // 86400 = 1 day
+}
+@endphp
+{{-- {{dd($_COOKIE['commande'])}} --}}
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,7 +18,8 @@
     <title>Asterisk Shopping</title>
     <!-- Bootstrap core CSS -->
 {{-- <link href="../../../public/css/app.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> --}}
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b6d6c66951.js" crossorigin="anonymous"></script>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -141,7 +152,11 @@ h1, h2, h3, h4, h5, h6 {
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
-      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span style="color:black;font-weight:bold">{{App\Ligne::count()}}</span></a>
+      @guest
+      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span style="color:black;font-weight:bold">{{$ligneController->countCartWithCookies()}}</span></a>
+      @else
+      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span style="color:black;font-weight:bold">{{$ligneController->countCart()}}</span></a>
+      @endguest
       </div>
       <div class="col-4 text-center">
       <a class="blog-header-logo text-dark" href="{{route('welcome')}}">Asterisk Shopping</a>
@@ -167,13 +182,13 @@ h1, h2, h3, h4, h5, h6 {
   </div>
 </div>
 <footer class="blog-footer">
+  <p>Crée par l'équipe Asterisk <span id="yearSpan"></span></p>
+  <p>Toutes les droits sont réservés</p>
   <script>
     let date = new Date();
     let year = date.getFullYear();
-    document.getElementById("yearSpan").innerHTML = year
+    document.getElementById("yearSpan").innerHTML = year;
   </script>
-  <p>Crée par l'équipe Asterisk <span id="yearSpan">2020</span></p>
-  <p>Toutes les droits sont réservés</p>
 </footer>
 </body>
 </html>

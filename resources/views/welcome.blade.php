@@ -1,5 +1,6 @@
 @extends('layouts.master')
-
+@php
+@endphp
 @section('content')
 <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
@@ -24,6 +25,8 @@
 </div>
 @endforeach
 <div>
-    <button class="btn btn-dark" href="{{route('articles.index')}}">Voir tous</button>
+    <form action="{{route('articles.index')}}">
+      <button type="submit" class="btn btn-dark">Voir tous</button>
+    </form>
 </div>
 @endsection

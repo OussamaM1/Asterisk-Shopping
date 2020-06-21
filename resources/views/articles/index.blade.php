@@ -6,9 +6,17 @@
     <div class="col p-4 d-flex flex-column position-static">
       <strong class="d-inline-block mb-2 text-success">Article {{$article->id}} </strong>
       <div class="mb-1 text-muted">{{$article->created_at->format('d/m/y')}}</div>
-      <strong>{{ number_format($article->prix,2, ', ',' ') . " £" }}</strong>
+      <strong>{{ number_format($article->prix,2, ', ',' ') . " Dhs" }}</strong>
       <a href="{{route('articles.show',$article)}}" class="stretched-link">Voir l'article</a>
-      <form action="#" method="POST">
+      <form action="{{route('lignes.store')}}" method="POST">
+        @csrf
+        <label for="quantite">Quantité :</label>
+        <input type="number" id="quantite" name="quantite" value="1">
+        @guest
+        @else
+        <input type="hidden" name="client" value="{{Illuminate\Support\Facades\Auth::user()->id}}">
+        @endguest
+        <input type="hidden" name="article" value="{{$article->id}}">
         <button type="submit" class="btn btn-dark">Ajouter au panier</button>
       </form>
     </div>

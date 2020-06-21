@@ -6,9 +6,16 @@
         <strong class="d-inline-block mb-2 text-success">Article {{$article->id}} </strong>
         <div class="mb-1 text-muted">{{$article->created_at->format('d/m/y')}}</div>
         <strong>{{ number_format($article->prix,2, ', ',' ') . " £" }}</strong>
-        <form action="{{route('lignes.create')}}" method="GET">
-        @csrf
-        <button type="submit" class="btn btn-dark">Ajouter au panier</button>
+        <form action="{{route('lignes.store')}}" method="POST">
+          @csrf
+          <label for="quantite">Quantité :</label>
+          <input type="number" id="quantite" name="quantite" value="1">
+          @guest
+          @else
+          <input type="hidden" name="client" value="{{Illuminate\Support\Facades\Auth::user()->id}}">
+          @endguest
+          <input type="hidden" name="article" value="{{$article->id}}">
+          <button type="submit" class="btn btn-dark">Ajouter au panier</button>
         </form>
       </div>
       <div class="col-auto d-none d-lg-block">
