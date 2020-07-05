@@ -1,4 +1,3 @@
-@inject('ligneController', 'App\Http\Controllers\LigneController')
 @php
 $cookie_name = "commande";
 $cookie_value = "[]";
@@ -6,8 +5,9 @@ if(!isset($_COOKIE['commande']))
 {
   setcookie($cookie_name, $cookie_value, time() + (86400 * 30),'/'); // 86400 = 1 day
 }
+// dd($_COOKIE['commande'])
 @endphp
-{{-- {{dd($_COOKIE['commande'])}} --}}
+@inject('ligneController', 'App\Http\Controllers\LigneController')
 <!doctype html>
 <html lang="en">
   <head>
@@ -155,6 +155,9 @@ h1, h2, h3, h4, h5, h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+.li{
+  list-style-type: none;
+}
     </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
@@ -180,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
         <a class="btn btn-sm btn-outline-secondary" href="{{route('login')}}">Se connecter</a>
         <a class="btn btn-sm btn-outline-secondary" href="{{route('register')}}">Créer un compte</a>
         @else
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown li">
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
               {{ Auth::user()->nom . " " . Auth::user()->prenom }} <span class="caret"></span>
           </a>
@@ -201,9 +204,10 @@ h1, h2, h3, h4, h5, h6 {
     </div>
   </header>
   <div>
-    <form action="#" class="form-inline">
+    <form action="{{route('search')}}" class="form-inline" method="POST">
+      @csrf
       <div class="form-group mx-sm-3 mb-2">
-      <input type="text" placeholder="Chercher un produit" class="form-control">
+      <input type="text" placeholder="Chercher un produit" class="form-control" name="q">
       <button type="submit" class="btn btn-info mb-2">Rechercher</button>
       </div>
     </form>

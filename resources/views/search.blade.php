@@ -1,5 +1,17 @@
 @extends('layouts.master')
 @section('content')
+@if(!isset($message))
+        <div>
+          <p> Les resultats de la recherche de <b> {{ $query }} </b> sont :</p>
+          <br>
+        <form action="{{route('search',['articles'=>$articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;})])}}" method="POST" onchange="this.form.submit()">
+            <label for="trie">Trier par : </label>
+            <select name="trie" id="trie">
+              <option value="Marque">Marque</option>
+              <option value="Prix">Prix</option>
+            </select>
+          </form>
+        </div>
 @foreach ($articles as $article)
 <div class="col-md-6">
   <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -26,4 +38,10 @@
   </div>
 </div>
 @endforeach
+@else
+<div>
+  <p> {{$message}} <b> {{$query}} </b></p>
+  <br>
+</div>
+@endif
 @endsection

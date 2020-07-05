@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ligne extends Model
 {
-    protected $fillable = ['quantite','prix_unit'];
-    public function commande()
+    protected $fillable = ['commande_id','article_id','quantite','prix_unit'];
+    public function commandes()
     {
         return $this->belongsTo('App\Commande','commande_id');
     }

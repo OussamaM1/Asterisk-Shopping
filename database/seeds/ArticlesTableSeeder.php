@@ -16,6 +16,7 @@ class ArticlesTableSeeder extends Seeder
         for($i=0;$i<20;$i++)
         {
         App\Article::create([
+            'titre' => $faker->sentence(6,true),
             'design' => 'https://via.placeholder.com/200x250',
             'prix' =>$faker->numberBetween(15, 300) * 100,
             'categorie' => $categories[mt_rand(0, count($categories) - 1)]

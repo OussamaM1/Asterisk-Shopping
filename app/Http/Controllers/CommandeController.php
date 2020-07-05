@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 use App\Commande;
+use App\Client;
+use App\Ligne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class CommandeController extends Controller
 {
@@ -14,7 +19,7 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        //
+        return view('commandes.index');
     }
 
     /**
@@ -24,7 +29,7 @@ class CommandeController extends Controller
      */
     public function create()
     {
-        //
+        // return view('commandes.create');
     }
 
     /**
@@ -48,7 +53,14 @@ class CommandeController extends Controller
     {
         //
     }
-
+    public static function getLastCommande()
+    {
+        $client = Auth::user();
+        // $commande = Commande::where('client_id',$client->id)->where('date','==','1970-01-01')->orderBy('date', 'desc')->first();
+        $commandesArray = Commande::get()->where('client_id',21)->where('date','==','1970-01-01')->toArray();
+        $commande = end($commandesArray);
+        return $commande;
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -57,7 +69,17 @@ class CommandeController extends Controller
      */
     public function edit(Commande $commande)
     {
-        //
+        $commande->date = date("Y-m-d");
+        $commande->save();
+        $client = Client::find($commande->client_id);
+        $client->nom = $_GET['nom'];
+        $client->prenom = $_GET['prenom'];
+        $client->adresse = $_GET['adresse'];
+        $client->ville = $_GET['ville'];
+        $client->save();
+        Mail::to($client->email)->send(new OrderShipped());
+        Ligne::truncate();
+        return Redirect::route('commandes.index');
     }
 
     /**
@@ -69,9 +91,9 @@ class CommandeController extends Controller
      */
     public function update(Request $request, Commande $commande)
     {
-        //
-    }
 
+        return view('commandes.update');
+    }
     /**
      * Remove the specified resource from storage.
      *

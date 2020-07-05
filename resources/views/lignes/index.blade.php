@@ -23,7 +23,7 @@
   @guest
   <h2>Nombre des articles :{{$ligneController->countCartWithCookies()}}</h2>
   @else
-  <h2>Nombre des articles :{{App\Ligne::count()}}</h2>
+  <h2>Nombre des articles :{{$ligneController->countCart()}}</h2>
   @endguest
 </div>
 {{-- {{dd($_COOKIE['commande'])}} --}}
@@ -42,7 +42,7 @@
         @foreach ($ligneController->cookieToArray() as $ligne)
         <?php $article = App\Article::find($ligne->article_id) ?>
         <tr>
-        <th scope="row">Article {{$ligne->article_id}}</th>
+        <th scope="row">{{$article->titre}}</th>
         <td>
           <form action="{{route('updateElement')}}" method="POST">
             @csrf
@@ -76,8 +76,24 @@
 
         @foreach ($lignes as $ligne)
         <tr>
-        <th scope="row">Article {{$ligneController->getLigneWithArticle($ligne->id)->id}}</th>
-        <td>{{$ligne->quantite}}</td>
+        {{-- <th scope="row">Article {{$ligneController->getLigneWithArticle($ligne->id)->id}}</th> --}}
+        <?php $article = App\Article::find($ligne->article_id) ?>
+        <th scope="row">{{$article->titre}}</th>
+        <td>
+          <form action="{{route('lignes.edit',['ligne'=>$ligne])}}" method="GET">
+            @csrf
+            <input type="hidden" name="articleId" value="{{$ligne->article_id}}">
+            <select name="articleQuantity" required="required" onchange="this.form.submit()">
+            @for ($i = 1; $i <= 10; $i++)
+            @if ($i == $ligne->quantite)
+              <option value="{{$i}}" selected="selected">{{$i}}</option>
+            @else
+              <option value="{{$i}}">{{$i}}</option>
+            @endif
+            @endfor
+          </select>
+          </form>
+        </td>
         <td>{{$ligne->prix_unit}}</td>
         <td>{{$ligne->quantite*$ligne->prix_unit}}</td>
         <td>
@@ -104,6 +120,14 @@
   <div>
     <a href="{{route('articles.index')}}">Poursuivre vos achats</a>
     <br>
-    <a href="{{}}">Finaliser votre commande</a>
+    @if($ligneController->countCart() != 0)
+      <form action="{{route('commandes.update',['commande'=>$ligneController->getIdCommandeFromLigne($lignes)])}}" method="POST">
+        @csrf
+        @method('PUT')
+      {{-- <input type="hidden" name="commandeId" value="{{$ligneController->getIdCommandeFromLigne($lignes)}}"> --}}
+        <button type="submit">Finaliser votre commande</button>
+      </form>
+    @endif
+    <a href="{{route('commandes.index')}}">Consulter la liste des commandes</a>
   </div>
 @endsection

@@ -66,6 +66,10 @@
                         </div>
                     </form>
                 </div>
+                <div>
+                    Vous avez pas encore un compte ? <br>
+                    <a href="{{route('register')}}">Créez le maintenant</a>
+                </div>
             </div>
         </div>
     </div>

@@ -10,7 +10,6 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
 
@@ -120,6 +119,10 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div>
+                    Vous avez déja un compte ? <br>
+                    <a href="{{route('login')}}">Authentifiez vous</a>
                 </div>
             </div>
         </div>

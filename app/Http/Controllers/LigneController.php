@@ -6,7 +6,8 @@ use App\Ligne;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Client;
-
+use App\Commande;
+use Illuminate\Support\Facades\Auth;
 class LigneController extends Controller
 {
     /**
@@ -30,7 +31,7 @@ class LigneController extends Controller
         $totalTTC = 0;
         foreach($lignes as $ligne)
         {
-            $totalTTC = $totalTTC + $ligne->quantite*$ligne->prix_unit;
+            $totalTTC += $ligne->quantite*$ligne->prix_unit;
         }
         return $totalTTC;
     }
@@ -93,17 +94,68 @@ class LigneController extends Controller
         }
         else
         {
-            $client = Client::find($request->client->id);
-            $commande_id = $client->commande()->id;
+            // $client = Client::find($request->client);
+            // $commande_id = Commande::with('client')->get()->last()->id;
+            if($this->countCart() <= 0)
+            {
+                $commande_id = Commande::createCommande();
+            }
+            else
+            {
+                $commande_id = $this->getLastCommande()->id;
+            }
             $data=[
                 'commande_id' =>$commande_id,
                 'article_id' =>$article->id,
-                'quantite' =>$request->quantite,
-                'prix_unit' =>$request->prix,
+                'quantite' =>intval($request->quantite),
+                'prix_unit' =>intval($article->prix),
             ];
-            Ligne::create($data);
+            $lignes = Ligne::all();
+            $exists = false;
+            $ligne = null;
+            foreach($lignes as $_ligne)
+            {
+                if($_ligne->article_id == $article->id)
+                {
+                    $exists = true;
+                    $ligne = Ligne::find($_ligne->id);
+                }
+            }
+            if($exists)
+            {
+                // $this->edit($ligne->id);
+                // dd($ligne->quantite);
+                $oldQ = intval($_POST['quantite']);
+                return redirect()->action('LigneController@edit',['ligne'=>$ligne,'articleQuantity'=>$ligne->quantite+$oldQ]);
+            }
+            else
+            {
+                Ligne::create($data);
+            }
         }
         $request->session()->flash('added','Article was added to cart');
+        return redirect('/lignes');
+    }
+    public function getIdCommandeFromLigne($lignes)
+    {
+        return $lignes[0]->commande_id;
+    }
+    public function getLastCommande()
+    {
+        $client = Auth::user();
+        $commandesArray = Commande::get()->where('client_id',21)->where('date','==','1970-01-01')->toArray();
+        $commande = end($commandesArray);
+        return $commande;
+    }
+    public function edit(Ligne $ligne)
+    {
+        $newQ = $_GET['articleQuantity'];
+        if($_GET['articleQuantity']>10) $newQ = 10;
+        if($_GET['articleQuantity']<=0) $newQ = 1;
+        $ligne = Ligne::find($ligne->id);
+        $ligne->quantite=$newQ;
+        $ligne->save();
+        session()->flash('updated','Article was updated from cart');
         return redirect('/lignes');
     }
     public function cookieToArray()
@@ -158,7 +210,12 @@ class LigneController extends Controller
     }
     public function countCartWithCookies()
     {
+        $cookie = "[]";
+        if(isset($_COOKIE['commande']))
+        {
+            // setcookie('commande', '[]', time() + (86400 * 30),'/'); // 86400 = 1 day
         $cookie = $_COOKIE['commande'];
+        }
         $array = json_decode($cookie,true);
         $number = 0;
         foreach($array as $key => $element)
@@ -169,7 +226,13 @@ class LigneController extends Controller
     }
     public function countCart()
     {
-
+        $lignes = Ligne::all();
+        $number = 0;
+        foreach($lignes as $ligne)
+        {
+            $number += $ligne->quantite;
+        }
+        return $number;
     }
     public function getTotalTTCWithCookies()
     {
@@ -200,10 +263,6 @@ class LigneController extends Controller
      * @param  \App\Ligne  $ligne
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ligne $ligne)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
