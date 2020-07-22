@@ -15,6 +15,7 @@
             </select>
           </form>
         </div>
+<div class="row mb-2">
 @foreach ($articles as $article)
 <div class="col-md-6">
   <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -55,3 +56,4 @@
 </div>
 @endif
 @endsection
+</div>

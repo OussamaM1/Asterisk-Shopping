@@ -212,9 +212,9 @@ h1, h2, h3, h4, h5, h6 {
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
       @guest
-      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span style="color:black;font-weight:bold">{{$ligneController->countCartWithCookies()}}</span></a>
+      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span class="badge badge-pill badge-warning">{{$ligneController->countCartWithCookies()}}</span></a>
       @else
-      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span style="color:black;font-weight:bold">{{$ligneController->countCart()}}</span></a>
+      <a class="text-muted" href="{{route('lignes.index')}}">Panier <span class="badge badge-pill badge-warning">{{$ligneController->countCart()}}</span></a>
       @endguest
       </div>
       <div class="col-4 text-center">
@@ -254,7 +254,7 @@ h1, h2, h3, h4, h5, h6 {
       </div>
     </form>
   </div>
-  <div class="row mb-2">
+  <div>
     @yield('content')
   </div>
 </div>
