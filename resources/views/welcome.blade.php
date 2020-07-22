@@ -23,13 +23,14 @@
 <div class="col-md-6">
   <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
     <div class="col p-4 d-flex flex-column position-static">
-      <strong class="d-inline-block mb-2 text-success">Article {{$article->id}} </strong>
-      <div class="mb-1 text-muted">{{$article->created_at->format('d/m/y')}}</div>
-      <strong>{{ number_format($article->prix,2, ', ',' ') . " £" }}</strong>
-      <a href="{{route('articles.show',$article)}}" class="stretched-link">Voir l'article</a>
+      <div class="mb-2 text-muted">{{$article->categorie}}</div>
+      <strong class="d-inline-block mb-2 text-success">{{$article->titre}} </strong>
+      <div class="mb-auto text-dark">{{$article->created_at->format('d/m/y')}}</div>
+      <strong class="mb-auto " style="font-size: 30px">{{ number_format($article->prix,2, ', ',' ') . " Dhs" }}</strong>
+      <a href="{{route('articles.show',$article)}}" class="btn btn-outline-primary">Voir l'article</a>
     </div>
     <div class="col-auto d-none d-lg-block">
-      <img src="{{$article->design}}" alt="{{$article->id}}">
+      <img src="{{$article->design}}" class="img-fluid rounded" width="200" alt="{{$article->id}}">
     </div>
   </div>
 </div>

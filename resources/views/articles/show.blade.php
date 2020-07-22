@@ -19,7 +19,7 @@
         </form>
       </div>
       <div class="col-auto d-none d-lg-block">
-        <img src="{{$article->design}}" alt="{{$article->id}}">
+        <img src="{{$article->design}}" class="img-fluid rounded" width="200" alt="{{$article->id}}">
       </div>
     </div>
   </div>
