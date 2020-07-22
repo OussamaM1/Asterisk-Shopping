@@ -35,6 +35,49 @@ if(!isset($_COOKIE['commande']))
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/b6d6c66951.js" crossorigin="anonymous"></script>
     <style>
+      /*Modal Style*/
+
+      .modal-bg
+      {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s;
+      }
+      .bg-active
+      {
+        visibility:visible;
+        opacity: 1;
+      }
+      .modal
+      {
+        background-color: white;
+        width: 30%;
+        height: 30%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 200px;
+        left: 35%;
+        z-index: 2;
+        font-family: 'Montserrat',sans-serif;
+      }
+
+
+
+
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -50,7 +93,6 @@ if(!isset($_COOKIE['commande']))
         }
       }
       /* stylelint-disable selector-list-comma-newline-after */
-
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
@@ -192,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
               <a class="dropdown-item" href="{{route('logout')}}"
                  onclick="event.preventDefault();
                                document.getElementById('logout-form').submit();">
-                  {{ __('Logout') }}
+                  {{ __('Quitter') }}
               </a>
               <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
                   @csrf

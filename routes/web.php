@@ -25,11 +25,31 @@ Auth::routes();
 Route::any('/search',function(){
     $q = Request::input('q');
     $articles = Article::where('titre','LIKE','%'.$q.'%')->orWhere('categorie','LIKE','%'.$q.'%')->get();
+    if(isset($_POST['trie']))
+    {
+        if($_POST['trie'] == 'prix')
+        {
+            $articles = $articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;});
+        }
+        else if($_POST['trie'] == 'marque')
+        {
+            $articles = $articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['marque'] < $b['marque']) ? -1 : 1;});
+        }
+    }
     if(count($articles) > 0)
         return view('search',['articles'=>$articles,'query'=>$q]);
     else return view ('search',['message'=>'Pas de résultats pour la requête','query'=>$q]);
 })->name('search');
 
+Route::get('/registerRedirect', function(){
+    $cookie_name = "commande";
+    $cookie_value = "[]";
+    if(!isset($_COOKIE['commande']))
+    {
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30),'/'); // 86400 = 1 day
+    }
+    return redirect('/lignes');
+})->name('registerRedirect');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/lignes/delete', function () {
     $articleId = intval($_GET['articleId']);

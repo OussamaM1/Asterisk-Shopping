@@ -10,7 +10,10 @@
 
 @else
     @php
-        $commandesArray = App\Commande::get()->where('client_id',21)->where('date','==','1970-01-01')->toArray();
+        while(!($commandesArray = App\Commande::get()->where('client_id',Auth::user()->id)->where('date','==','1970-01-01')->toArray()))
+        {
+            App\Commande::createCommande();
+        }
     @endphp
     <form action="{{route('commandes.edit',['commande'=>end($commandesArray)['id']])}}">
         <div class="container">

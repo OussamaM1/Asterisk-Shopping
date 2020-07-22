@@ -111,11 +111,11 @@
   <div>
     @guest
       <h6>Total TTC : {{$ligneController->getTotalTTCWithCookies()}} Dhs</h6>
+      <br>
+      <p>Pour finaliser la commande, il faut s'authentifier</p>
     @else
       <h6>Total TTC : {{$ligneController->getTotalTTC()}} Dhs</h6>
     @endguest
-      <br>
-      <p>Frais de livraison non inclus pour le moment</p>
   </div>
   <div>
     <a href="{{route('articles.index')}}">Poursuivre vos achats</a>
@@ -128,6 +128,9 @@
         <button type="submit">Finaliser votre commande</button>
       </form>
     @endif
+    @guest
+    @else
     <a href="{{route('commandes.index')}}">Consulter la liste des commandes</a>
+    @endguest
   </div>
 @endsection

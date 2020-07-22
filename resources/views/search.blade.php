@@ -2,13 +2,16 @@
 @section('content')
 @if(!isset($message))
         <div>
-          <p> Les resultats de la recherche de <b> {{ $query }} </b> sont :</p>
+          <p> Les résultats de la recherche de <b> {{ $query }} </b> sont :</p>
           <br>
-        <form action="{{route('search',['articles'=>$articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;})])}}" method="POST" onchange="this.form.submit()">
+        {{-- <form action="{{route('search',['articles'=>$articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;})])}}" method="POST"> --}}
+        <form action="{{route('search')}}" method="POST">
+            @csrf
             <label for="trie">Trier par : </label>
-            <select name="trie" id="trie">
-              <option value="Marque">Marque</option>
-              <option value="Prix">Prix</option>
+            <select name="trie" id="trie" onchange="this.form.submit()">
+              <option selected="selected"></option>
+              <option value="marque">Marque</option>
+              <option value="prix">Prix</option>
             </select>
           </form>
         </div>
@@ -29,7 +32,14 @@
         <input type="hidden" name="client" value="{{Illuminate\Support\Facades\Auth::user()->id}}">
         @endguest
         <input type="hidden" name="article" value="{{$article->id}}">
-        <button type="submit" class="btn btn-dark">Ajouter au panier</button>
+        <input readonly="readonly" class="modal-btn btn btn-dark" value="Ajouter au panier">
+        <div class="modal-bg">
+          <div class="modal">
+            <h2>Le produit sera ajouté immédiatement</h2>
+            <input class="btn btn-dark modal-close" value="Poursuivre vos achats">
+            <button type="submit" class="btn btn-dark">Soumettre votre commande</button>
+          </div>
+        </div>
       </form>
     </div>
     <div class="col-auto d-none d-lg-block">

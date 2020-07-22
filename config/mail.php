@@ -12,7 +12,14 @@ return [
     | and used as needed; however, this mailer will be used by default.
     |
     */
-
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer'       => false,
+            'verify_peer_name'  => false,
+        ],
+    ],
+    
     'default' => env('mailgun', 'smtp'),
 
     /*

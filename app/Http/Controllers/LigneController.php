@@ -102,7 +102,7 @@ class LigneController extends Controller
             }
             else
             {
-                $commande_id = $this->getLastCommande()->id;
+                $commande_id = $this->getLastCommande()['id'];
             }
             $data=[
                 'commande_id' =>$commande_id,
@@ -133,7 +133,7 @@ class LigneController extends Controller
                 Ligne::create($data);
             }
         }
-        $request->session()->flash('added','Article was added to cart');
+        $request->session()->flash('added','L\'article a été ajouté');
         return redirect('/lignes');
     }
     public function getIdCommandeFromLigne($lignes)
@@ -142,9 +142,14 @@ class LigneController extends Controller
     }
     public function getLastCommande()
     {
-        $client = Auth::user();
-        $commandesArray = Commande::get()->where('client_id',21)->where('date','==','1970-01-01')->toArray();
-        $commande = end($commandesArray);
+        if(!($commandesArray = Commande::get()->where('client_id',Auth::user()->id)->where('date','==','1970-01-01')->toArray()))
+        {
+            $commande = Commande::createCommande();
+        }
+        else
+        {
+            $commande = end($commandesArray);
+        }
         return $commande;
     }
     public function edit(Ligne $ligne)
@@ -155,7 +160,7 @@ class LigneController extends Controller
         $ligne = Ligne::find($ligne->id);
         $ligne->quantite=$newQ;
         $ligne->save();
-        session()->flash('updated','Article was updated from cart');
+        session()->flash('updated','La ligne a été modifiée dans le panier');
         return redirect('/lignes');
     }
     public function cookieToArray()
@@ -180,7 +185,7 @@ class LigneController extends Controller
         unset($array[$var]);
         $json = json_encode($array,true);
         setcookie("commande", $json, time() + (86400 * 30),'/');
-        session()->flash('deleted','Article was deleted from cart');
+        session()->flash('deleted','L\'article a été supprimé');
         return redirect('/lignes');
     }
     public function updateCookieElement($id,$newQuantity)
@@ -205,7 +210,7 @@ class LigneController extends Controller
         $array[$var]=$cart_item;
         $json = json_encode($array,true);
         setcookie("commande", $json, time() + (86400 * 30),'/');
-        session()->flash('updated','Line was updated');
+        session()->flash('updated','La ligne a été modifiée');
         return redirect('/lignes');
     }
     public function countCartWithCookies()
@@ -285,7 +290,7 @@ class LigneController extends Controller
     public function destroy($ligne)
     {
         Ligne::destroy($ligne);
-        session()->flash('deleted','Post was deleted');
+        session()->flash('deleted','L\'article a été supprimé');
         return redirect('/lignes');
     }
 }
