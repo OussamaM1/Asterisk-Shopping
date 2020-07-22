@@ -50,8 +50,25 @@
 </div>
 @endforeach
 @else
+<div class="container-fluid mt-100 py-1 mb-lg-4">
+  <div class="row">
+      <div class="col-md-12 px-6 py-4 mb-lg-4">
+          <div class="card py-4 shadow">
+              <div class="card-body cart">
+                  <div class="col-sm-12 empty-cart-cls text-center">
+                      <i class="fas fa-times"></i>
+                      <strong>{{$message}} <b> {{$query}}.</strong><br>
+                      <a href="{{route('articles.index')}}" class="btn btn-primary cart-btn-transform m-3">
+                        Continuer vos achats
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 <div>
-  <p> {{$message}} <b> {{$query}} </b></p>
+  <p> </b></p>
   <br>
 </div>
 @endif
