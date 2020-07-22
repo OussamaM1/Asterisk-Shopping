@@ -6,7 +6,7 @@
         {{session()->get('deleted')}}
     </div>
 @elseif (session()->has('updated'))
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-primary" role="alert">
     {{session()->get('updated')}}
     </div>
 @elseif (session()->has('added'))
@@ -21,13 +21,6 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 p-5 bg-white rounded shadow p-3 mb-5">
-<div>
-  @guest
-  <strong>Nombre des articles : {{$ligneController->countCartWithCookies()}}</strong>
-  @else
-  <h5>Nombre des articles : {{$ligneController->countCart()}}</h5>
-  @endguest
-</div>
 {{-- {{dd($_COOKIE['commande'])}} --}}
 <div class="table-responsive">
 <table class="table">
@@ -127,7 +120,7 @@
             <form method="POST" action="{{route('lignes.destroy',['ligne'=>$ligne->id])}}">
                 @csrf
                 @method('DELETE')
-                <button type="submit"><i class="fas fa-trash"></i></button>
+                <button type="submit" class="btn btn-block btn-sm btn-outline-light"><i class="fas fa-trash" style="color:rgb(238, 54, 54)"></i></button>
             </form>
         </td>
         </tr>
@@ -138,34 +131,47 @@
 </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-  <div>
-    @guest
-      <h6>Total TTC : {{$ligneController->getTotalTTCWithCookies()}} Dhs</h6>
-      <br>
-      <p>Pour finaliser la commande, il faut s'authentifier</p>
-    @else
-      <h6>Total TTC : {{$ligneController->getTotalTTC()}} Dhs</h6>
-    @endguest
+<div class="row py-5 p-4 bg-white rounded shadow p-3">
+  <div class="col-lg-12">
+    <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Récapitulatif de la commande</div>
   </div>
-  <div>
-    <a href="{{route('articles.index')}}">Poursuivre vos achats</a>
-    <br>
-    @if($ligneController->countCart() != 0)
+  <div class="col-lg-12">
+    <div class="p-4">
+      <p class="font-italic mb-3">
+        Les frais d'expédition et supplémentaires sont calculés en fonction des articles commandés.  
+      </p>
+      @guest
+      <ul class="list-unstyled mb-4">
+        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Nombre des articles de la commande</strong><strong> {{$ligneController->countCartWithCookies()}}</strong></li>
+        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total TTC</strong><strong>{{$ligneController->getTotalTTCWithCookies()}} Dhs</strong></li>
+      </ul>
+      <div class="alert alert-warning" role="alert">
+        Pour finaliser la commande, il faut <a href="{{route('login')}}" class="text-info"> s'authentifier</a>
+      </div>
+      <a href="{{route('articles.index')}}" class="btn btn-outline-danger float-right py-2 px-2  col-lg-6">Poursuivre vos achats <i class="fas fa-arrow-circle-right"></i></a>
+      @else
+      <ul class="list-unstyled mb-4">
+        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Nombre des articles de la commande</strong><strong> {{$ligneController->countCart()}}</strong></li>
+        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total TTC</strong><strong>{{$ligneController->getTotalTTC()}} Dhs</strong></li>
+      </ul>
+      @if($ligneController->countCart() != 0)
       <form action="{{route('commandes.update',['commande'=>$ligneController->getIdCommandeFromLigne($lignes)])}}" method="POST">
         @csrf
         @method('PUT')
-      {{-- <input type="hidden" name="commandeId" value="{{$ligneController->getIdCommandeFromLigne($lignes)}}"> --}}
-        <button type="submit">Finaliser votre commande</button>
-      </form>
-    @endif
-    @guest
-    @else
-    <a href="{{route('commandes.index')}}">Consulter la liste des commandes</a>
-    @endguest
+        {{-- <input type="hidden" name="commandeId" value="{{$ligneController->getIdCommandeFromLigne($lignes)}}"> --}}
+          <button type="submit" class="btn btn-outline-success py-2 px-2 float-right col-lg-6">Finaliser votre commande <i class="fas fa-shopping-cart"></i></button>
+        </form>
+      @endif
+      <a href="{{route('articles.index')}}" class="text-danger">Poursuivre vos achats</a><br>
+      <a href="{{route('commandes.index')}}">Consulter la liste de vos commandes</a>
+      @endguest
+    </div>
   </div>
+
+</div>
+</div>
+</div>
+</div>
 @endsection
 

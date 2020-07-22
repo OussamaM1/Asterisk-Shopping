@@ -234,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
               <a class="dropdown-item" href="{{route('logout')}}"
                  onclick="event.preventDefault();
                                document.getElementById('logout-form').submit();">
-                  {{ __('Quitter') }}
+                  {{ __('Se déconnecter') }}
               </a>
               <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
                   @csrf
