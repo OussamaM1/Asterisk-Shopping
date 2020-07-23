@@ -1,14 +1,20 @@
 @extends('layouts.master')
 @section('content')
+<form action="{{route('search')}}" method="POST" class="form-inline d-flex justify-content-center col-lg-12 mb-2">
+  @csrf
+  <div class="form-group mb-2 mr-1 col-lg-8">
+    <input type="text" class="form-control col-lg-12 px-3 py-2" placeholder="Chercher un produit" name="q">
+  </div>
+  <button type="submit" class="btn btn-outline-primary px-3 py-2 mb-2">Rechercher <i class="fas fa-search"></i></button>
+</form>
 @if(!isset($message))
         <div>
           <p> Les résultats de la recherche de <b> {{ $query }} </b> sont :</p>
-          <br>
         {{-- <form action="{{route('search',['articles'=>$articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;})])}}" method="POST"> --}}
-        <form action="{{route('search')}}" method="POST">
+        <form action="{{route('search')}}" method="POST" class="form-inline">
             @csrf
-            <label for="trie">Trier par : </label>
-            <select name="trie" id="trie" onchange="this.form.submit()">
+            <label for="trie" class="mr-2">Trier par : </label>
+            <select class="form-control col-2" name="trie" id="trie" onchange="this.form.submit()">
               <option selected="selected"></option>
               <option value="marque">Marque</option>
               <option value="prix">Prix</option>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use App\Commande;
@@ -57,7 +58,7 @@ class CommandeController extends Controller
     {
         $client = Auth::user();
         // $commande = Commande::where('client_id',$client->id)->where('date','==','1970-01-01')->orderBy('date', 'desc')->first();
-        $commandesArray = Commande::get()->where('client_id',21)->where('date','==','1970-01-01')->toArray();
+        $commandesArray = Commande::get()->where('client_id', 21)->where('date', '==', '1970-01-01')->toArray();
         $commande = end($commandesArray);
         return $commande;
     }
@@ -67,7 +68,7 @@ class CommandeController extends Controller
      * @param  \App\Commande  $commande
      * @return \Illuminate\Http\Response
      */
-    public function edit(Commande $commande)
+    public function edit(Commande $commande, Request $request)
     {
         $commande->date = date("Y-m-d");
         $commande->save();
@@ -79,6 +80,7 @@ class CommandeController extends Controller
         $client->save();
         Mail::to($client->email)->send(new OrderShipped());
         Ligne::truncate();
+        $request->session()->flash('added', 'Votre commande a bien été validé, veuillez vérifier votre email.');
         return Redirect::route('commandes.index');
     }
 

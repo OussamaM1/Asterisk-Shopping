@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="bg-light  px-4 py-3 mb-2 text-uppercase font-weight-bold">{{ __('Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -66,8 +66,8 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    Vous avez pas encore un compte ? <br>
+                <div class="alert alert-warning" role="alert">
+                    <span>Vous avez pas encore un compte ?</span>
                     <a href="{{route('register')}}">Créez le maintenant</a>
                 </div>
             </div>

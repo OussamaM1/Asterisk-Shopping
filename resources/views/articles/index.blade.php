@@ -26,7 +26,7 @@
         <input type="hidden" name="client" value="{{Illuminate\Support\Facades\Auth::user()->id}}">
         @endguest
         <input type="hidden" name="article" value="{{$article->id}}">
-        <button type="submit" class="btn btn-success mr-1">Ajouter au panier</button>
+        <button type="submit" class="btn btn-success mr-1"><i class="fas fa-shopping-basket"></i> Ajouter au panier</button>
         <a href="{{route('articles.show',$article)}}" class="btn btn-outline-primary">Voir l'article</a>
       </form>
     </div>

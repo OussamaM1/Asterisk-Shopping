@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Créer un compte') }}</div>
+                <div class="bg-light  px-4 py-3 mb-2 text-uppercase font-weight-bold">{{ __('Créer un compte') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -120,8 +120,8 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    Vous avez déja un compte ? <br>
+                <div class="alert alert-warning" role="alert">
+                    <span>Vous avez déja un compte ? </span>
                     <a href="{{route('login')}}">Authentifiez vous</a>
                 </div>
             </div>
