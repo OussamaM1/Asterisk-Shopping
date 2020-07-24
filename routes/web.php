@@ -92,6 +92,7 @@ Route::get('/adminPanel', function () {
 Route::delete('/adminPanel/{article}', 'AdminController@delete')->name('delete');
 Route::resource('/commandes', 'CommandeController')->only('update', 'edit', 'index');
 
+
 Route::get('/', function () {
     $articles = App\Article::inRandomOrder()->take(6)->get();
     return view('welcome')->with('articles', $articles);

@@ -34,6 +34,10 @@ class UpdateCart
     public function handle(Login $event)
     {
         $client = Auth::user();
+        while(!isset($client))
+        {
+            $client = Auth::user();
+        }
         $commande = new Commande();
         $commande->client_id = $client->id;
         $commande->date = date("Y-m-d");
