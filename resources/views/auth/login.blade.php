@@ -67,7 +67,7 @@
                     </form>
                 </div>
                 <div class="alert alert-warning" role="alert">
-                    <span>Vous avez pas encore un compte ?</span>
+                    <span>Vous n'avez pas encore un compte ?</span>
                     <a href="{{route('register')}}">Créez le maintenant</a>
                 </div>
             </div>

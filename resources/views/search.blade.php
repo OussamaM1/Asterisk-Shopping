@@ -11,7 +11,7 @@
         <div>
           <p> Les résultats de la recherche de <b> {{ $query }} </b> sont :</p>
         {{-- <form action="{{route('search',['articles'=>$articles->sort(function($a,$b){if($a['prix'] == $b['prix']) {return 0;} return ($a['prix'] < $b['prix']) ? -1 : 1;})])}}" method="POST"> --}}
-        <form action="{{route('search')}}" method="POST" class="form-inline">
+        <form action="{{route('search')}}" method="POST" class="form-inline mb-3">
             @csrf
             <label for="trie" class="mr-2">Trier par : </label>
             <select class="form-control col-2" name="trie" id="trie" onchange="this.form.submit()">
@@ -68,10 +68,6 @@
       </div>
   </div>
 </div>
-<div>
-  <p> </b></p>
-  <br>
-</div>
 @endif
-@endsection
 </div>
+@endsection
