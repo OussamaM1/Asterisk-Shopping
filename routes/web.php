@@ -64,7 +64,33 @@ Route::post('/lignes/update', function () {
     $helper->updateCookieElement($articleId,$newQuantity);
     return redirect('/lignes');
 })->name('updateElement');
-
+Route::get('/admin',function(){
+    return view('admin/adminHome');
+})->name('adminHome');
+Route::post('checkLogin',function(){
+    if(($_POST['email'] != 'admin@admin.com') || ($_POST['password'] != 'admin'))
+    {
+        session()->flash('wrong','Les données saisies sont incorrectes!');
+        return redirect(route('adminHome'));
+    }
+    else
+    {
+        session()->flash('test',0);
+        return redirect()->route('adminPanel');
+    }
+})->name('checkLogin');
+Route::get('/adminPanel',function(){
+    if(!session()->has('test'))
+    {
+        session()->flash('first','Vous devez s\'authentifier avant accéder à cette espace privée!');
+        return redirect()->route('adminHome');
+    }
+    else
+    {
+        return view('admin/adminPanel');
+    }
+})->name('adminPanel');
+Route::delete('/adminPanel/{article}','AdminController@delete')->name('delete');
 Route::resource('/commandes','CommandeController')->only('update','edit','index');
 
 Route::get('/', function () {

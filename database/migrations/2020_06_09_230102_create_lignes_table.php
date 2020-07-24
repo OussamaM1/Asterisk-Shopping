@@ -16,7 +16,7 @@ class CreateLignesTable extends Migration
         Schema::create('lignes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('commande_id')->constrained();
-            $table->foreignId('article_id')->constrained();
+            $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->integer('quantite');
             $table->integer('prix_unit');
             $table->timestamps();
