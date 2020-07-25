@@ -5,6 +5,10 @@
 Réalisation d’une application web e-commerce pour une entreprise de vente des produits informatiques et vidéo, en utilisant 
 HTML, CSS, Javascript, PHP (Laravel), et MySQL.
 
+Réalisé par : 
+ - Yassine Elhilali
+ - Oussama Makhlouk
+
 ## Déploiement du projet
 
    - Extraire la base de donnée du dossier base donnee puis créer une base de donnee local nommé `asteriskshopping` utf8_general_ci
