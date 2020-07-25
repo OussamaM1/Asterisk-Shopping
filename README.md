@@ -8,6 +8,10 @@ HTML, CSS, Javascript, PHP (Laravel), et MySQL.
 Réalisé par : 
  - Yassine Elhilali
  - Oussama Makhlouk
+ 
+Encadré par : 
+ - M.EL YOUSFI ABDERRAHMANE
+
 
 ## Déploiement du projet
 
