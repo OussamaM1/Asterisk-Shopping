@@ -42,7 +42,7 @@
           <input type="hidden" name="article" value="{{$article->id}}">
           <!-- btn-Modal -->
           <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#ModalCenter">Ajouter au panier</button>
-          <!-- Modal -->
+          {{-- {{-- <!-- Modal --> --}}
           <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -56,7 +56,7 @@
                   Le produit a bien été ajouté dans votre panier.
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary shadow-sm" data-dismiss="modal">Poursuivre vos achats</button>
+                  {{-- <button type="button" class="btn btn-outline-primary shadow-sm" data-dismiss="modal">Poursuivre vos achats</button> --}}
                   <button type="submit" class="btn btn-success shadow-sm">Finaliser la commande</button>
                 </div>
               </div>

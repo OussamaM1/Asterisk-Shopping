@@ -89,6 +89,9 @@ Route::get('/adminPanel', function () {
         // }
     return view('admin/adminPanel');
 })->name('adminPanel');
+Route::any('/addAndReturn',function(Request $request){
+    return route('lignes.store',['request'=>$request]);
+})->name('addAndReturn');
 Route::delete('/adminPanel/{article}', 'AdminController@delete')->name('delete');
 Route::resource('/commandes', 'CommandeController')->only('update', 'edit', 'index');
 Route::resource('/articles', 'ArticleController');
