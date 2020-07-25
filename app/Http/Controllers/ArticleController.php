@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Article;
 use Illuminate\Http\Request;
 
@@ -36,7 +38,22 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // request()->validate([
+        //     'titre' => 'required',
+        //     'design' => 'required',
+        //     'categorie' => 'required',
+        //     'prix' => 'required'
+        // ]);
+        $article = new Article();
+        $article->titre = $_POST['title'];
+        $article->categorie = $_POST['category'];
+        $article->prix = $_POST['price'];
+        $article->design = $request->image;
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $article->save();
+        session()->flash('test', 0);
+        return redirect()->route('adminPanel');
     }
 
     /**

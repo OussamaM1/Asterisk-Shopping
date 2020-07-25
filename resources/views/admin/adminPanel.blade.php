@@ -54,29 +54,30 @@ $articles = App\Article::all();
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form action="#" method="">
+                    <form action="{{route('articles.store')}}" method="POST" enctype="multipart/form-data">
+                      @csrf
                         <div class="form-group">
                           <label for="titre">Titre :</label>
-                          <input type="text" class="form-control" id="titre" placeholder="Titre de l'article">
+                          <input name="title" type="text" class="form-control" id="titre" placeholder="Titre de l'article">
                         </div>
                       <div class="form-group">
                         <label for="categorie">Catégorie :</label>
-                        <input type="text" class="form-control" id="categorie" placeholder="Categorie : Ordinateur, Logiciels...">
+                         <input name="category" type="text" class="form-control" id="categorie" placeholder="Categorie : Ordinateur, Logiciels...">
                       </div>
                       <div class="form-group">
                         <label for="Prix">Prix :</label>
-                        <input type="text" class="form-control" id="Prix" placeholder="Prix de l'article">
+                         <input name="price" type="text" class="form-control" id="Prix" placeholder="Prix de l'article">
                       </div>
                       <div class="form-group">
                         <label for="designation">Désignation de l'article :</label>
-                        <input type="file" class="form-control-file" id="designation">
+                        <input name="image" type="file" class="form-control-file" id="designation">
                       </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-primary shadow-sm col-4" data-dismiss="modal">Annuler</button>
+                      <button type="submit" class="btn btn-success shadow-sm col-4">Enregistrer</button>
                       </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary shadow-sm col-4" data-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-success shadow-sm col-4">Enregistrer</button>
-                  </div>
-                </form>
+                      </form>
+                    </div>
                 </div>
               </div>
             </div>
