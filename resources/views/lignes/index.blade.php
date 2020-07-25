@@ -14,7 +14,13 @@
     {{session()->get('added')}}
     </div>
 @endif
-
+<form action="{{route('search')}}" method="POST" class="form-inline d-flex justify-content-center col-lg-12 mb-2">
+  @csrf
+  <div class="form-group mb-2 mr-1 col-lg-8">
+    <input type="text" class="form-control col-lg-12" placeholder="Chercher un produit" name="q">
+  </div>
+  <button type="submit" class="btn btn-outline-primary px-3 py-2 mb-2">Rechercher <i class="fas fa-search"></i></button>
+</form>
 @guest
     @if($ligneController->countCartWithCookies() == 0)
     <div class="container-fluid mt-100 py-1 mb-lg-4">

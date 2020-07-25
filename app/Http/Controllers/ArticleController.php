@@ -17,7 +17,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-        return view('articles.index')->with('articles',$articles);
+        return view('articles.index')->with('articles', $articles);
     }
 
     /**
@@ -50,9 +50,10 @@ class ArticleController extends Controller
         $article->categorie = $_POST['category'];
         $article->prix = $_POST['price'];
         $article->design = $request->image;
-        $imageName = time().'.'.$request->image->extension();
+        $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         $article->save();
+        $request->session()->flash('alert-article', 'L\'article a été ajouté.');
         return redirect()->route('adminPanel');
     }
 
@@ -64,7 +65,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles.show')->with('article',$article);
+        return view('articles.show')->with('article', $article);
     }
 
     /**

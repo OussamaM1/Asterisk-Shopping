@@ -184,6 +184,11 @@ h1, h2, h3, h4, h5, h6 {
     </div>
   </header>
   <div>
+    @if (session()->has('alert-logout'))
+    <div class="alert alert-warning container col-12" role="alert">
+      {{session()->get('alert-logout')}}
+    </div>
+    @endif
     @yield('content')
   </div>
 </div>
