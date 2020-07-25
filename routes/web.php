@@ -81,13 +81,12 @@ Route::post('checkLogin', function () {
     }
 })->name('checkLogin');
 Route::get('/adminPanel', function () {
-    // if (!session()->has('test')) {
-        //     session()->flash('first', 'Vous devez s\'authentifier avant d\'accéder à cette espace privée!');
-        //     return redirect()->route('adminHome');
-    // } else {
-        //     return view('admin/adminPanel');
-        // }
-    return view('admin/adminPanel');
+    if (!session()->has('test')) {
+            session()->flash('first', 'Vous devez s\'authentifier avant d\'accéder à cette espace privée!');
+            return redirect()->route('adminHome');
+    } else {
+            return view('admin/adminPanel');
+        }
 })->name('adminPanel');
 Route::any('/addAndReturn',function(Request $request){
     return route('lignes.store',['request'=>$request]);

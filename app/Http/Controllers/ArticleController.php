@@ -38,12 +38,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // request()->validate([
-        //     'titre' => 'required',
-        //     'design' => 'required',
-        //     'categorie' => 'required',
-        //     'prix' => 'required'
-        // ]);
+        session()->flash('test', 0);
+        request()->validate([
+            'title' => 'required',
+            'image' => 'required',
+            'category' => 'required',
+            'price' => 'required'
+        ]);
         $article = new Article();
         $article->titre = $_POST['title'];
         $article->categorie = $_POST['category'];
@@ -52,7 +53,6 @@ class ArticleController extends Controller
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         $article->save();
-        session()->flash('test', 0);
         return redirect()->route('adminPanel');
     }
 
