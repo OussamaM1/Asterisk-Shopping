@@ -40,28 +40,7 @@
           <input type="hidden" name="client" value="{{Illuminate\Support\Facades\Auth::user()->id}}">
           @endguest
           <input type="hidden" name="article" value="{{$article->id}}">
-          <!-- btn-Modal -->
-          <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#ModalCenter">Ajouter au panier</button>
-          {{-- {{-- <!-- Modal --> --}}
-          <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Asterisk Shopping</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body" style="font-size: 18px">
-                  Le produit a bien été ajouté dans votre panier.
-                </div>
-                <div class="modal-footer">
-                  {{-- <button type="button" class="btn btn-outline-primary shadow-sm" data-dismiss="modal">Poursuivre vos achats</button> --}}
-                  <button type="submit" class="btn btn-success shadow-sm">Finaliser la commande</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <button type="submit" class="btn btn-success mr-1">Ajouter au panier</button>
           <a href="{{route('articles.show',$article)}}" class="btn btn-outline-primary">Voir l'article</a>
         </form>
       </div>

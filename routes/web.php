@@ -42,7 +42,7 @@ Route::any('/search', function () {
         }
     }
     if (count($articles) > 0)
-    return view('search', ['articles' => $articles, 'query' => $q]);
+        return view('search', ['articles' => $articles, 'query' => $q]);
     else return view('search', ['message' => 'Pas de résultats pour la requête', 'query' => $q]);
 })->name('search');
 
@@ -81,16 +81,16 @@ Route::post('checkLogin', function () {
     }
 })->name('checkLogin');
 Route::get('/adminPanel', function () {
-    // if (!session()->has('test')) {
-        //     session()->flash('first', 'Vous devez s\'authentifier avant d\'accéder à cette espace privée!');
-        //     return redirect()->route('adminHome');
-    // } else {
-        //     return view('admin/adminPanel');
-        // }
+    if (!session()->has('test')) {
+        session()->flash('first', 'Vous devez s\'authentifier avant d\'accéder à cette espace privée!');
+        return redirect()->route('adminHome');
+    } else {
+        return view('admin/adminPanel');
+    }
     return view('admin/adminPanel');
 })->name('adminPanel');
-Route::any('/addAndReturn',function(Request $request){
-    return route('lignes.store',['request'=>$request]);
+Route::any('/addAndReturn', function (Request $request) {
+    return route('lignes.store', ['request' => $request]);
 })->name('addAndReturn');
 Route::delete('/adminPanel/{article}', 'AdminController@delete')->name('delete');
 Route::resource('/commandes', 'CommandeController')->only('update', 'edit', 'index');

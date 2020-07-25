@@ -1,5 +1,12 @@
 @extends('layouts.master')
 @section('content')
+<form action="{{route('search')}}" method="POST" class="form-inline d-flex justify-content-center col-lg-12 mb-2">
+  @csrf
+  <div class="form-group mb-2 mr-1 col-lg-8">
+    <input type="text" class="form-control col-lg-12" placeholder="Chercher un produit" name="q">
+  </div>
+  <button type="submit" class="btn btn-outline-primary px-3 py-2 mb-2">Rechercher <i class="fas fa-search"></i></button>
+</form>
 <div>
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative">
       <div class="col p-5 d-flex flex-column position-static">

@@ -34,6 +34,10 @@ $articles = App\Article::all();
 <div class="alert alert-danger col-12" role="alert">
   {{session()->get('deleted')}}
 </div>
+@elseif (session()->has('alert-article'))
+<div class="alert alert-success col-12" role="alert">
+  {{session()->get('alert-article')}}
+</div>
 @endif
 </div>
 <div class="px-4 px-lg-0 mt-4">

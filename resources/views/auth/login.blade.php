@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@if (session()->has('alert-register'))
+<div class="alert alert-success container col-10" role="alert">
+  {{session()->get('alert-register')}}
+</div>
+@endif
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
