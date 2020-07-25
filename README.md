@@ -5,6 +5,8 @@
 Réalisation d’une application web e-commerce pour une entreprise de vente des produits informatiques et vidéo, en utilisant 
 HTML, CSS, Javascript, PHP (Laravel), et MySQL.
 
+Demo : https://mega.nz/file/U5ZCyIrI#iKfbBxMd-TcBPuvvXkcfHvNKuNiJ5kth-bNo5NxFf1I
+
 Réalisé par : 
  - Yassine Elhilali
  - Oussama Makhlouk
